@@ -6,3 +6,5 @@ gutils/__pycache__
 gutils/server/__pycache__
 gutils/picture/__pycache__
 __pycache__/
+*.pyc
+*/__pycache__/
