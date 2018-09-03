@@ -1,56 +1,48 @@
-gutils-cli
+finder-py
 =======
 
-Python common tools, support [win, mac, linux]
+It is a tool for 'LAN file Share', support [win, mac, linux]
 
 ### Use help
 
 ~~~bash
-~ gutils
-usage: gutils [-h] {resize,share} ...
+~ finder
+usage: finder [-h] [-i IP] [-p PORT] [-d DIR] [-q] [-u] [--start]
+              [--pid_file PID_FILE] [--log_file LOG_FILE] [--stop]
 
-Hey, gutils 1.1.7
+LAN file sharing 1.2.2
 
 optional arguments:
-  -h, --help      show this help message and exit
-
-Available commands:
-  {resize,share}
-    resize        images resize
-    share         LAN file sharing
+  -h, --help            show this help message and exit
+  -i IP, --ip IP        Local IP
+  -p PORT, --port PORT  Local port
+  -d DIR, --dir DIR     Shared directory path
+  -q, --qr              Show QRCode
+  -u, --upload          Support upload
+  --start               daemon start
+  --pid_file PID_FILE   pid_file
+  --log_file LOG_FILE   log_file
+  --stop                daemon stop
 
 make it easy
-
 ~~~
 
 ### Install
 
 ~~~bash
-~ sudo pip install gutils
+~ sudo pip install finder-py
 ~~~
 
-If the following error is printed
+or 
 
 ~~~bash
-Could not find a version that satisfies the requirement gutils (from versions: )
-
-No matching distribution found for gutils
-~~~
-
-You can use 'zh' mirrors
-
-> tsinghua: https://pypi.tuna.tsinghua.edu.cn/simple/
->
-> douban  : https://pypi.douban.com/simple/
-
-~~~bash
-~ sudo pip install gutils -i https://pypi.douban.com/simple/
+~ sudo pip install finder-py -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ~~~
 
 Install the latest version with Github
 
 ~~~bash
-~ sudo pip install git+https://github.com/hyxf/gutils-cli.git@master
+~ sudo pip install git+https://github.com/hyxf/finder-java.git@master
 ~~~
 
 ---------
@@ -58,19 +50,19 @@ Install the latest version with Github
 ### Uninstall
 
 ~~~bash
-~ sudo pip uninstall gutils
+~ sudo pip uninstall finder-py
 ~~~
 
 ### Upgrade
 
 ~~~bash
-~ sudo pip install --upgrade gutils
+~ sudo pip install --upgrade finder-py
 ~~~
 
 or
 
 ~~~bash
-~ sudo pip install -U gutils
+~ sudo pip install -U finder-py
 ~~~
 
 --------------------
@@ -84,12 +76,6 @@ local install [for mac]
 ~ ./install.sh
 ~~~
 
-pypi upload
-
-~~~bash
-~ chmod +x deploy.sh
-~ ./deploy.sh
-~~~
 
 ----------------------
 
