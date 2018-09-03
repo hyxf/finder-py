@@ -18,8 +18,6 @@ def execute():
     Program entry point
     :return:
     """
-    if len(sys.argv) == 1:
-        sys.argv.append('--help')
     parser = argparse.ArgumentParser(prog='finder', description='LAN file sharing {0}'.format(finder.__version__),
                                      epilog='make it easy')
 
@@ -43,6 +41,6 @@ if __name__ == '__main__':
     """
     test main
     """
-    # sys.argv.append('-q')
+    sys.argv.append('-h')
     # sys.argv.append('--start')
     execute()
