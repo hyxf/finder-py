@@ -1,0 +1,2 @@
+include finder/VERSION
+include finder/server/index.html
