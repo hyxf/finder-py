@@ -42,7 +42,7 @@ or
 Install the latest version with Github
 
 ~~~bash
-~ sudo pip install git+https://github.com/hyxf/finder-java.git@master
+~ sudo pip install git+https://github.com/hyxf/finder-py.git@master
 ~~~
 
 ---------
