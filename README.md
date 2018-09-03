@@ -10,7 +10,7 @@ It is a tool for 'LAN file Share', support [win, mac, linux]
 usage: finder [-h] [-i IP] [-p PORT] [-d DIR] [-q] [-u] [--start]
               [--pid_file PID_FILE] [--log_file LOG_FILE] [--stop]
 
-LAN file sharing 1.2.2
+LAN file sharing 1.2.1
 
 optional arguments:
   -h, --help            show this help message and exit
