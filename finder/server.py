@@ -79,9 +79,9 @@ def index():
     return render_template('index.html',
                            title='Finder',
                            files=files,
-                           nav=False,
+                           nav=False,  # show back
                            path='/',
-                           upload=app.config.get(key_upload))
+                           upload=app.config.get(key_upload))  # support upload
 
 
 @app.route('/<path:path>', methods=['GET'])
