@@ -133,4 +133,8 @@ def cmd_http_server(args):
     app.config[key_pass] = args.password
     if args.qr:
         utils.qr_code_show('http://{0}:{1}/'.format(ip, args.port))
+    if args.start:
+        daemon.daemon_exec(command='start',
+                           pid_file=args.pid_file,
+                           log_file=args.log_file)
     app.run(host=ip, port=args.port)
