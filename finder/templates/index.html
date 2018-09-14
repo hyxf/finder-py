@@ -1,137 +1,101 @@
-<!DOCTYPE html>
-<html>
+{% extends 'layout.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.png"/>
-    <title>{{title}} - {{path}}</title>
-    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+{% block body %}
 
-</head>
+<div class="row table-responsive">
 
-<body>
+    <table class="table order-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Time</th>
+            <th>Size</th>
+            <th>Tools</th>
 
-<div class="container">
+        </tr>
+        </thead>
+        <tbody>
 
-    <div class="row">
-        <h2 style="margin-left: 5px"><a href="/">{{title}}</a> - {{path}}</h2>
-    </div>
-
-    <div class="row well" style="padding: 7px;margin-bottom: 5px;">
-
-        <input type="search" style="float: left;width: 250px;" class="form-control light-table-filter"
-               data-table="order-table"
-               placeholder="Filter">
-
-        {% if upload %}
-        <div style="float: right;" class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary btn-primary">New</button>
-            <button type="button" class="btn btn-secondary btn-primary">Remote</button>
-            <button type="button" class="btn btn-secondary btn-primary">Upload</button>
-        </div>
+        {% if nav %}
+        <tr>
+            <td><a href="../" title="back"><span class="glyphicon glyphicon-chevron-left"/>Back</a></td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
         {% endif %}
 
-    </div>
-
-    <div class="row table-responsive">
-
-        <table class="table order-table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Time</th>
-                <th>Size</th>
-                <th>Tools</th>
-
-            </tr>
-            </thead>
-            <tbody>
-
-            {% if nav %}
-            <tr>
-                <td><a href="../" title="back"><span class="glyphicon glyphicon-chevron-left"/>Back</a></td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            {% endif %}
-
-            {% for file in files %}
-            <tr>
-                <td>
-                    <a href="{{file.path}}" title="{{file.name}}">
-                        {% if file.isfile %}
-                        <span class="glyphicon glyphicon-file"/>
-                        {% else %}
-                        <span class="glyphicon glyphicon-folder-open"/>
-                        {% endif %}
-                        {{file.name}}
-                    </a>
-                </td>
-                <td>{{file.time}}</td>
-                <td>{{file.size}}</td>
-                <td>
+        {% for file in files %}
+        <tr>
+            <td>
+                <a href="{{file.path}}" title="{{file.name}}">
                     {% if file.isfile %}
-                    <a href="#"><span class="glyphicon glyphicon-trash"/></a>
-                    <a href="{{file.path}}"><span style="margin-left: 3px"
-                                                  class="glyphicon glyphicon-download-alt"/></a>
+                    <span class="glyphicon glyphicon-file"/>
+                    {% else %}
+                    <span class="glyphicon glyphicon-folder-open"/>
                     {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
+                    {{file.name}}
+                </a>
+            </td>
+            <td>{{file.time}}</td>
+            <td>{{file.size}}</td>
+            <td>
+                {% if file.isfile %}
+                <a href="#"><span class="glyphicon glyphicon-trash"/></a>
+                <a href="{{file.path}}"><span style="margin-left: 3px"
+                                              class="glyphicon glyphicon-download-alt"/></a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 
-        <script>
-            (function (document) {
-                'use strict';
+    <script>
+        (function (document) {
+            'use strict';
 
-                var LightTableFilter = (function (Arr) {
+            var LightTableFilter = (function (Arr) {
 
-                    var _input;
+                var _input;
 
-                    function _onInputEvent(e) {
-                        _input = e.target;
-                        var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-                        Arr.forEach.call(tables, function (table) {
-                            Arr.forEach.call(table.tBodies, function (tbody) {
-                                Arr.forEach.call(tbody.rows, _filter);
-                            });
+                function _onInputEvent(e) {
+                    _input = e.target;
+                    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+                    Arr.forEach.call(tables, function (table) {
+                        Arr.forEach.call(table.tBodies, function (tbody) {
+                            Arr.forEach.call(tbody.rows, _filter);
+                        });
+                    });
+                }
+
+                function _filter(row) {
+                    var text = row.textContent.toLowerCase(),
+                        val = _input.value.toLowerCase();
+                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+                }
+
+                return {
+                    init: function () {
+                        var inputs = document.getElementsByClassName('light-table-filter');
+                        Arr.forEach.call(inputs, function (input) {
+                            input.oninput = _onInputEvent;
                         });
                     }
+                };
+            })(Array.prototype);
 
-                    function _filter(row) {
-                        var text = row.textContent.toLowerCase(),
-                            val = _input.value.toLowerCase();
-                        row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-                    }
+            document.addEventListener('readystatechange', function () {
+                if (document.readyState === 'complete') {
+                    LightTableFilter.init();
+                }
+            });
 
-                    return {
-                        init: function () {
-                            var inputs = document.getElementsByClassName('light-table-filter');
-                            Arr.forEach.call(inputs, function (input) {
-                                input.oninput = _onInputEvent;
-                            });
-                        }
-                    };
-                })(Array.prototype);
+        })(document);
 
-                document.addEventListener('readystatechange', function () {
-                    if (document.readyState === 'complete') {
-                        LightTableFilter.init();
-                    }
-                });
-
-            })(document);
-
-        </script>
-
-    </div>
+    </script>
 
 </div>
-</body>
 
-</html>
+{% endblock %}

@@ -67,23 +67,24 @@ def upload():
     return 'success'
 
 
-@app.route('/', methods=['GET'])
-@basic_auth_required
-def index():
-    """
-    index page
-    :return:
-    """
-    www = app.config.get(key_www)
-    files = _ls(www, show_hidden=False)
-    return render_template('index.html',
-                           title='Finder',
-                           files=files,
-                           nav=False,  # show back
-                           path='/',
-                           upload=app.config.get(key_upload))  # support upload
+# @app.route('/', methods=['GET'])
+# @basic_auth_required
+# def index():
+#     """
+#     index page
+#     :return:
+#     """
+#     www = app.config.get(key_www)
+#     files = _ls(www, show_hidden=False)
+#     return render_template('index.html',
+#                            title='Finder',
+#                            files=files,
+#                            nav=False,  # show back
+#                            path='/',
+#                            upload=app.config.get(key_upload))  # support upload
 
 
+@app.route('/', defaults={'path': '/'}, methods=['GET'])
 @app.route('/<path:path>', methods=['GET'])
 @basic_auth_required
 def index_path(path):
@@ -93,14 +94,15 @@ def index_path(path):
     :return:
     """
     www = app.config.get(key_www)
-    file_path = os.path.join(www, path)
+    is_root = path == '/'
+    file_path = www if is_root else os.path.join(www, path)
     if os.path.exists(file_path):
         if os.path.isdir(file_path):
             files = _ls(file_path, show_hidden=False)
             return render_template('index.html',
                                    title='Finder',
                                    files=files,
-                                   nav=True,
+                                   nav=False if is_root else True,
                                    path=path if path.startswith('/') else '/{0}'.format(path),
                                    upload=app.config.get(key_upload))
 
@@ -113,6 +115,24 @@ def index_path(path):
             return response
     else:
         abort(404)
+
+
+@app.route('/upload/', defaults={'path': '/'}, methods=['GET'])
+@app.route('/upload/<path:path>', methods=['GET'])
+@basic_auth_required
+def upload_path(path):
+    """
+    upload for path
+    :param path:
+    :return:
+    """
+    www = app.config.get(key_www)
+    return render_template('upload.html',
+                           title='Finder',
+                           files=[],
+                           nav=True,
+                           path=path if path.startswith('/') else '/{0}'.format(path),
+                           upload=app.config.get(key_upload))
 
 
 # --------------------------------------------

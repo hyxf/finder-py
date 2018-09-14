@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.png"/>
+    <title>{{title}} - {{path}}</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="row">
+        <h2 style="margin-left: 5px"><a href="/">{{title}}</a> - {{path}}</h2>
+    </div>
+
+    <div class="row well" style="padding: 7px;margin-bottom: 5px;">
+
+        <input type="search" style="float: left;width: 250px;" class="form-control light-table-filter"
+               data-table="order-table"
+               placeholder="Filter">
+
+        {% if upload %}
+        <div style="float: right;" class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary btn-primary">New</button>
+            <button type="button" class="btn btn-secondary btn-primary">Remote</button>
+            <button type="button" class="btn btn-secondary btn-primary">Upload</button>
+        </div>
+        {% endif %}
+
+    </div>
+
+    {% block body %}
+    {% endblock %}
+
+</div>
+</body>
+
+</html>
