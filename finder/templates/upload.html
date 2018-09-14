@@ -16,15 +16,8 @@
 {% block body %}
 
 <div class="row">
-    <div id="dropzone">
-        <form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
+    <div id="dropzone" class="dropzone needsclick dz-clickable">
 
-            <div class="dz-message needsclick">
-                Drop files here or click to upload.<br>
-                <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
-            </div>
-
-        </form>
     </div>
 </div>
 
@@ -33,11 +26,16 @@
 
 {% block script %}
 
+<script src="/static/jquery-1.12.1.min.js"></script>
 <script src="/static/dropzone/dropzone.js"></script>
-<script src="/static/dropzone/dropzone-amd-module.js"></script>
 
 <script>
-
+    $(function () {
+        $("#dropzone").dropzone({
+            url: "fileUpload.htm",
+            maxFiles: 10
+        });
+    })
 </script>
 
 {% endblock %}
