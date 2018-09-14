@@ -41,6 +41,6 @@ if __name__ == '__main__':
     """
     test main
     """
-    # sys.argv.append('-h')
-    # sys.argv.append('--start')
+    sys.argv.append('-d')
+    sys.argv.append('/Users/hyxf/Desktop')
     execute()
