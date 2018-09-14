@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
+from functools import wraps
 
-from flask import Flask, abort, send_file
+from flask import Flask, abort, send_file, request, Response
 from flask import render_template
 
 from finder import daemon
@@ -11,6 +12,30 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 key_www = 'www'
 key_upload = 'upload'
+
+
+def basic_auth_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not _check_auth(auth.username, auth.password):
+            return _not_authenticated()
+        return f(*args, **kwargs)
+
+    return decorated
+
+
+def _check_auth(username, password):
+    return 'a' == username and 'b' == password
+
+
+def _not_authenticated():
+    """Sends a 401 response that enables basic auth
+    """
+    return Response(
+        'Could not verify your access level for that URL.\n'
+        'You have to login with proper credentials', 401,
+        {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
 
 def _ls(path, show_hidden=True):
@@ -29,8 +54,17 @@ def _ls(path, show_hidden=True):
     return files
 
 
+@app.route('/upload', methods=['POST'])
+def upload():
+    pass
+
+
 @app.route('/', methods=['GET'])
 def index():
+    """
+    index page
+    :return:
+    """
     www = app.config.get(key_www)
     files = _ls(www, show_hidden=False)
     return render_template('index.html',
@@ -42,6 +76,11 @@ def index():
 
 @app.route('/<path:path>', methods=['GET'])
 def index_path(path):
+    """
+    index for path
+    :param path:
+    :return:
+    """
     www = app.config.get(key_www)
     file_path = os.path.join(www, path)
     if os.path.exists(file_path):
