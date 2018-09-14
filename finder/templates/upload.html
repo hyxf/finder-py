@@ -1,5 +1,12 @@
 {% extends 'layout.html' %}
 
+{% block style %}
+
+<link rel="stylesheet" href="/static/dropzone/dropzone.css">
+<link rel="stylesheet" href="/static/dropzone/basic.css">
+
+{% endblock %}
+
 {% block upload %}
 
 <a href="{{path}}" class="btn btn-secondary btn-primary">Finder</a>
@@ -9,7 +16,26 @@
 {% block body %}
 
 <div class="row">
-    <h3>upload</h3>
+    <div id="dropzone">
+        <form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
+
+            <div class="dz-message needsclick">
+                Drop files here or click to upload.<br>
+                <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+            </div>
+
+        </form>
+    </div>
 </div>
 
+{% endblock %}
+
+
+{% block script %}
+<script src="/static/dropzone/dropzone.js"></script>
+<script src="/static/dropzone/dropzone-amd-module.js"></script>
+
+<script>
+
+</script>
 {% endblock %}

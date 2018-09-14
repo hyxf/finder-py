@@ -8,7 +8,8 @@
     <link rel="icon" type="image/x-icon" href="/static/favicon.png"/>
     <title>{{title}} - {{path}}</title>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
-
+    {% block style %}
+    {% endblock %}
 </head>
 
 <body>
@@ -38,6 +39,9 @@
     </div>
 
     {% block body %}
+    {% endblock %}
+
+    {% block script %}
     {% endblock %}
 
 </div>
