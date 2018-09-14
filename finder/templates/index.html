@@ -13,7 +13,7 @@
 
 <body>
 
-<section class="container">
+<div class="container">
 
     <div class="row">
         <h2 style="margin-left: 5px"><a href="/">{{title}}</a> - {{path}}</h2>
@@ -21,7 +21,7 @@
 
     <div class="row well" style="padding: 7px;margin-bottom: 5px;">
 
-        <input type="search" style="float: left;width: 200px;" class="form-control light-table-filter"
+        <input type="search" style="float: left;width: 250px;" class="form-control light-table-filter"
                data-table="order-table"
                placeholder="Filter">
 
@@ -75,7 +75,7 @@
                 <td>
                     {% if file.isfile %}
                     <a href="#"><span class="glyphicon glyphicon-trash"/></a>
-                    <a href="{{file.path}}"><span class="glyphicon glyphicon-download-alt"/></a>
+                    <a href="{{file.path}}"><span style="margin-left: 3px" class="glyphicon glyphicon-download-alt"/></a>
                     {% endif %}
                 </td>
             </tr>
@@ -85,7 +85,7 @@
         </table>
     </div>
 
-</section>
+</div>
 
 <script>
     (function (document) {
