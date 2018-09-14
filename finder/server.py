@@ -2,6 +2,7 @@
 import os
 
 from flask import Flask
+from flask import render_template
 
 from finder import daemon
 from finder import utils
@@ -13,7 +14,8 @@ www = os.getcwd()
 
 @app.route('/')
 def index():
-    return 'hello'
+    return render_template('index.html',
+                           title='qiudongchao')
 
 
 @app.route('/<path:path>')
