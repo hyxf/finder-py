@@ -15,10 +15,11 @@
 
 <section class="container">
 
-    <h2>{{title}} - [{{path}}]</h2>
+    <div class="row">
+        <h2 style="margin-left: 5px"><a href="/">{{title}}</a> - {{path}}</h2>
+    </div>
 
-    <!--<div class="row well" style="background: #E8EBEE;padding: 8px">-->
-    <div class="row well" style="padding: 7px;margin-bottom: 5px">
+    <div class="row well" style="padding: 7px;margin-bottom: 5px;">
 
         <input type="search" style="float: left;width: 200px;" class="form-control light-table-filter"
                data-table="order-table"
@@ -26,11 +27,11 @@
 
         {% if upload %}
         <div style="float: right;" class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary btn-primary">New</button>
+            <button type="button" class="btn btn-secondary btn-primary">Remote</button>
             <button type="button" class="btn btn-secondary btn-primary">Upload</button>
-            <button type="button" class="btn btn-secondary btn-primary">Aria2</button>
         </div>
         {% endif %}
-
 
     </div>
 
@@ -50,7 +51,7 @@
 
             {% if nav %}
             <tr>
-                <td><a href="../" title="<-back"><-back</a></td>
+                <td><a href="../" title="back"><span class="glyphicon glyphicon-chevron-left"/>Back</a></td>
                 <td>-</td>
                 <td>-</td>
                 <td>-</td>
@@ -59,10 +60,24 @@
 
             {% for file in files %}
             <tr>
-                <td><a href="{{file.path}}" title="{{file.name}}">{{file.name}}</a></td>
+                <td>
+                    <a href="{{file.path}}" title="{{file.name}}">
+                        {% if file.isfile %}
+                        <span class="glyphicon glyphicon-file"/>
+                        {% else %}
+                        <span class="glyphicon glyphicon-folder-open"/>
+                        {% endif %}
+                        {{file.name}}
+                    </a>
+                </td>
                 <td>{{file.time}}</td>
                 <td>{{file.size}}</td>
-                <td><a href="{{file.path}}"><span class="glyphicon glyphicon-save"/></a></td>
+                <td>
+                    {% if file.isfile %}
+                    <a href="#"><span class="glyphicon glyphicon-trash"/></a>
+                    <a href="{{file.path}}"><span class="glyphicon glyphicon-download-alt"/></a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
 

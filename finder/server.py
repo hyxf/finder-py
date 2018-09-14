@@ -48,6 +48,7 @@ def _ls(path, show_hidden=True):
     for file_name in lists:
         file_path = os.path.join(path, file_name)
         file_map = {'path': file_path.replace(www, ''),
+                    'isfile': os.path.isfile(file_path),
                     'name': file_name,
                     'time': utils.get_file_time(file_path),
                     'size': utils.get_file_size(file_path) if os.path.isfile(file_path) else '-'}
@@ -100,7 +101,7 @@ def index_path(path):
                                    title='Finder',
                                    files=files,
                                    nav=True,
-                                   path=path,
+                                   path=path if path.startswith('/') else '/{0}'.format(path),
                                    upload=app.config.get(key_upload))
 
         else:
