@@ -117,8 +117,8 @@ def index_path(path):
         abort(404)
 
 
-@app.route('/upload/', defaults={'path': '/'}, methods=['GET'])
-@app.route('/upload/<path:path>', methods=['GET'])
+@app.route('/up88/', defaults={'path': '/'}, methods=['GET'])
+@app.route('/up88/<path:path>', methods=['GET'])
 @basic_auth_required
 def upload_path(path):
     """
