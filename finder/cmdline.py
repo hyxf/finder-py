@@ -44,6 +44,11 @@ if __name__ == '__main__':
     """
     test main
     """
+    # sys.argv.append('--user')
+    # sys.argv.append('admin')
+    # sys.argv.append('--password')
+    # sys.argv.append('pass')
+
     sys.argv.append('-d')
     sys.argv.append('/Users/hyxf')
     execute()

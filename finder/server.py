@@ -19,20 +19,15 @@ key_pass = 'pass'
 def basic_auth_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        auth = request.authorization
-        if not auth or not _check_auth(auth.username, auth.password):
-            return _not_authenticated()
+        user = app.config.get(key_user)
+        passwd = app.config.get(key_pass)
+        if user and passwd:
+            auth = request.authorization
+            if not auth or not (user == auth.username and passwd == auth.password):
+                return _not_authenticated()
         return f(*args, **kwargs)
 
     return decorated
-
-
-def _check_auth(username, password):
-    user = app.config.get(key_user)
-    passwd = app.config.get(key_pass)
-    if not user and not passwd:
-        return True
-    return user == username and passwd == password
 
 
 def _not_authenticated():
