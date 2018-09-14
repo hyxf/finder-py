@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from flask import Flask, abort, send_from_directory, make_response
+from flask import Flask, abort, send_file
 from flask import render_template
 
 from finder import daemon
@@ -27,10 +27,10 @@ def index_path(path):
             pass
         else:
             base_name = os.path.basename(file_path)
-            base_dir = os.path.dirname(file_path)
-            response = make_response(send_from_directory(base_dir, base_name, as_attachment=True))
-            response.headers["Content-Disposition"] = "attachment; filename={}".format(
-                base_name.encode('ascii').decode('utf-8'))
+            # support chinese
+            response = send_file(file_path,
+                                 as_attachment=True,
+                                 attachment_filename=base_name.encode('utf-8'))
             return response
     else:
         abort(404)
