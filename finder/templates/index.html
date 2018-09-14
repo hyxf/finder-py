@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" type="image/x-icon" href="/static/favicon.png"/>
-    <title>{{title}} file: /Desktop/</title>
+    <title>{{title}} - {{path}}</title>
     <style>
         /*!
        * Bootstrap v3.0.0
@@ -275,7 +275,7 @@
 
 <section class="container">
 
-    <h2>File Sharing [/Desktop/]</h2>
+    <h2>{{title}} - [{{path}}]</h2>
 
     <div class="top-bar">
         <input type="search" style="float: left;" class="light-table-filter" data-table="order-table"
@@ -298,11 +298,14 @@
         </tr>
         </thead>
         <tbody>
+
+        {% if nav %}
         <tr>
             <td><a href="../" title="<-back"><-back</a></td>
             <td>-</td>
             <td>-</td>
         </tr>
+        {% endif %}
 
         {% for file in files %}
         <tr>

@@ -34,7 +34,9 @@ def index():
     files = _ls(www, show_hidden=False)
     return render_template('index.html',
                            title='Finder',
-                           files=files)
+                           files=files,
+                           nav=False,
+                           path='/')
 
 
 @app.route('/<path:path>', methods=['GET'])
@@ -46,7 +48,9 @@ def index_path(path):
             files = _ls(file_path, show_hidden=False)
             return render_template('index.html',
                                    title='Finder',
-                                   files=files)
+                                   files=files,
+                                   nav=True,
+                                   path=path)
 
         else:
             base_name = os.path.basename(file_path)
