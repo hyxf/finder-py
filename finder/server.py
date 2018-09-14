@@ -23,7 +23,7 @@ def _ls(path, show_hidden=True):
         file_map = {'path': file_path.replace(www, ''),
                     'name': file_name,
                     'time': utils.get_file_time(file_path),
-                    'size': utils.get_file_size(file_path)}
+                    'size': utils.get_file_size(file_path) if os.path.isfile(file_path) else '-'}
         files.append(file_map)
     return files
 
@@ -85,4 +85,6 @@ def cmd_http_server(args):
     else:
         www = os.getcwd()
     app.config[key_www] = www
+    if args.qr:
+        utils.qr_code_show('http://{0}:{1}/'.format(ip, args.port))
     app.run(host=ip, port=args.port)
