@@ -67,23 +67,6 @@ def upload():
     return 'success'
 
 
-# @app.route('/', methods=['GET'])
-# @basic_auth_required
-# def index():
-#     """
-#     index page
-#     :return:
-#     """
-#     www = app.config.get(key_www)
-#     files = _ls(www, show_hidden=False)
-#     return render_template('index.html',
-#                            title='Finder',
-#                            files=files,
-#                            nav=False,  # show back
-#                            path='/',
-#                            upload=app.config.get(key_upload))  # support upload
-
-
 @app.route('/', defaults={'path': '/'}, methods=['GET'])
 @app.route('/<path:path>', methods=['GET'])
 @basic_auth_required
