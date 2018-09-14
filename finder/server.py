@@ -1,9 +1,27 @@
 # -*- coding: utf-8 -*-
 import os
 
+from flask import Flask
+
 from finder import daemon
 from finder import utils
 
+app = Flask(__name__, static_folder='static', template_folder='templates')
+
+www = os.getcwd()
+
+
+@app.route('/')
+def index():
+    return 'hello'
+
+
+@app.route('/<path:path>')
+def index_path(path):
+    return path
+
+
+# --------------------------------------------
 
 def cmd_http_server(args):
     """
@@ -21,7 +39,6 @@ def cmd_http_server(args):
         ip = utils.get_ip()
 
     if args.dir:
-        base_dir = args.dir
-    else:
-        base_dir = os.getcwd()
-    pass
+        www = args.dir
+
+    app.run(host=ip, port=args.port)

@@ -41,6 +41,6 @@ if __name__ == '__main__':
     """
     test main
     """
-    sys.argv.append('-h')
+    # sys.argv.append('-h')
     # sys.argv.append('--start')
     execute()
