@@ -31,13 +31,15 @@ def get_file_time(file):
     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(file_stat.st_mtime))
 
 
-def convert_file_size(size):
+def get_file_size(file):
     """
-    convert file size
+    get file size
 
-    :param size:
+    :param file:
     :return:
     """
+    file_stat = os.stat(file)
+    size = file_stat.st_size
     kb = 1024
     mb = kb * 1024
     gb = mb * 1024

@@ -13,19 +13,28 @@ key_www = 'www'
 
 
 def _ls(path, show_hidden=True):
+    www = app.config.get(key_www)
     lists = os.listdir(path)
     if not show_hidden:
         lists = [x for x in lists if not x.startswith('.')]
-    for f in lists:
-        print '--> %s' % f
+    files = []
+    for file_name in lists:
+        file_path = os.path.join(path, file_name)
+        file_map = {'path': file_path.replace(www, ''),
+                    'name': file_name,
+                    'time': utils.get_file_time(file_path),
+                    'size': utils.get_file_size(file_path)}
+        files.append(file_map)
+    return files
 
 
 @app.route('/', methods=['GET'])
 def index():
     www = app.config.get(key_www)
-    _ls(www, show_hidden=False)
+    files = _ls(www, show_hidden=False)
     return render_template('index.html',
-                           title='qiudongchao')
+                           title='Finder',
+                           files=files)
 
 
 @app.route('/<path:path>', methods=['GET'])
@@ -34,7 +43,11 @@ def index_path(path):
     file_path = os.path.join(www, path)
     if os.path.exists(file_path):
         if os.path.isdir(file_path):
-            path
+            files = _ls(file_path, show_hidden=False)
+            return render_template('index.html',
+                                   title='Finder',
+                                   files=files)
+
         else:
             base_name = os.path.basename(file_path)
             # support chinese

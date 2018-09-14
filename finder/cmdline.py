@@ -42,5 +42,5 @@ if __name__ == '__main__':
     test main
     """
     sys.argv.append('-d')
-    sys.argv.append('/Users/hyxf/Desktop')
+    sys.argv.append('/Users/hyxf')
     execute()
