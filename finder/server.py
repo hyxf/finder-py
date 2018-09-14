@@ -12,8 +12,18 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 key_www = 'www'
 
 
+def _ls(path, show_hidden=True):
+    lists = os.listdir(path)
+    if not show_hidden:
+        lists = [x for x in lists if not x.startswith('.')]
+    for f in lists:
+        print '--> %s' % f
+
+
 @app.route('/', methods=['GET'])
 def index():
+    www = app.config.get(key_www)
+    _ls(www, show_hidden=False)
     return render_template('index.html',
                            title='qiudongchao')
 
@@ -24,7 +34,7 @@ def index_path(path):
     file_path = os.path.join(www, path)
     if os.path.exists(file_path):
         if os.path.isdir(file_path):
-            pass
+            path
         else:
             base_name = os.path.basename(file_path)
             # support chinese
