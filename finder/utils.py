@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+import os
 import socket
+import time
 
 import qrcode
 
@@ -16,6 +18,17 @@ def qr_code_show(message):
             qr.get_image().show()
         except Exception as e:
             print(e)
+
+
+def get_file_time(file):
+    """
+    get file time
+
+    :param file:
+    :return:
+    """
+    file_stat = os.stat(file)
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(file_stat.st_mtime))
 
 
 def convert_file_size(size):
