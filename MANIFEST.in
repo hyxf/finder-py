@@ -1,2 +1,4 @@
 include finder/VERSION
-include finder/server/index.html
+include finder/static/dropzone.js
+include finder/static/favicon.png
+include finder/templates/index.html

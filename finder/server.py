@@ -10,6 +10,7 @@ from finder import utils
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 key_www = 'www'
+key_upload = 'upload'
 
 
 def _ls(path, show_hidden=True):
@@ -85,6 +86,7 @@ def cmd_http_server(args):
     else:
         www = os.getcwd()
     app.config[key_www] = www
+    app.config[key_upload] = args.upload
     if args.qr:
         utils.qr_code_show('http://{0}:{1}/'.format(ip, args.port))
     app.run(host=ip, port=args.port)
