@@ -28,6 +28,9 @@ def execute():
     parser.add_argument('-q', '--qr', action='store_true', default=False, help='Show QRCode')
     parser.add_argument('-u', '--upload', action='store_true', default=False, help='Support upload')
 
+    parser.add_argument('--user', type=str, help='Basic Auth User')
+    parser.add_argument('--password', type=str, help='Basic Auth Password')
+
     parser.add_argument('--start', action='store_true', default=False, help='daemon start')
     parser.add_argument('--pid_file', type=str, default='/var/run/finder.pid', help='pid_file')
     parser.add_argument('--log_file', type=str, default='/var/log/finder.log', help='log_file')

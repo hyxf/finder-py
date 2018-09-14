@@ -12,6 +12,8 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 key_www = 'www'
 key_upload = 'upload'
+key_user = 'user'
+key_pass = 'pass'
 
 
 def basic_auth_required(f):
@@ -26,7 +28,11 @@ def basic_auth_required(f):
 
 
 def _check_auth(username, password):
-    return 'a' == username and 'b' == password
+    user = app.config.get(key_user)
+    passwd = app.config.get(key_pass)
+    if not user and not passwd:
+        return True
+    return user == username and passwd == password
 
 
 def _not_authenticated():
@@ -60,6 +66,7 @@ def upload():
 
 
 @app.route('/', methods=['GET'])
+@basic_auth_required
 def index():
     """
     index page
@@ -75,6 +82,7 @@ def index():
 
 
 @app.route('/<path:path>', methods=['GET'])
+@basic_auth_required
 def index_path(path):
     """
     index for path
@@ -126,6 +134,8 @@ def cmd_http_server(args):
         www = os.getcwd()
     app.config[key_www] = www
     app.config[key_upload] = args.upload
+    app.config[key_user] = args.user
+    app.config[key_pass] = args.password
     if args.qr:
         utils.qr_code_show('http://{0}:{1}/'.format(ip, args.port))
     app.run(host=ip, port=args.port)
