@@ -51,5 +51,5 @@ if __name__ == '__main__':
 
     sys.argv.append('-u')
     sys.argv.append('-d')
-    sys.argv.append('/Users/hyxf')
+    sys.argv.append('/Users/hyxf/Public')
     execute()
