@@ -57,7 +57,13 @@ def _ls(path, show_hidden=True):
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    pass
+    www = app.config.get(key_www)
+    path = request.form['path']
+    ufile = request.files['file']
+    """:type :werkzeug.datastructures.FileStorage"""
+    file_path = os.path.join(www, path, ufile.filename)
+    ufile.save(dst=file_path)
+    return 'success'
 
 
 @app.route('/', methods=['GET'])
@@ -73,7 +79,8 @@ def index():
                            title='Finder',
                            files=files,
                            nav=False,
-                           path='/')
+                           path='/',
+                           upload=app.config.get(key_upload))
 
 
 @app.route('/<path:path>', methods=['GET'])
@@ -93,7 +100,8 @@ def index_path(path):
                                    title='Finder',
                                    files=files,
                                    nav=True,
-                                   path=path)
+                                   path=path,
+                                   upload=app.config.get(key_upload))
 
         else:
             base_name = os.path.basename(file_path)

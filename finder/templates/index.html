@@ -280,12 +280,16 @@
     <div class="top-bar">
         <input type="search" style="float: left;" class="light-table-filter" data-table="order-table"
                placeholder="Filter">
-        <form action="/" method="post" class="utils-hidden"
+
+        {% if upload %}
+        <form action="/upload" method="post"
               enctype="multipart/form-data">
-            <input type="hidden" name="path" value="/Desktop/">
+            <input type="hidden" name="path" value="{{path}}">
             <input type="file" name="file" value="file"/>
             <input id="submit_form" type="submit" value="upload"/>
         </form>
+        {% endif %}
+
     </div>
 
     <table class="order-table table">
