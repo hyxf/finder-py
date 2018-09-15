@@ -106,7 +106,7 @@ def upload():
     """:type :werkzeug.datastructures.FileStorage"""
     file_path = os.path.join(www, path[1:], ufile.filename)
     ufile.save(dst=file_path)
-    return 'success'
+    return '1'
 
 
 @app.route('/', defaults={'path': '/'}, methods=['GET'])
