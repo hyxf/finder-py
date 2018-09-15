@@ -53,7 +53,7 @@ if __name__ == '__main__':
     # sys.argv.append('--password')
     # sys.argv.append('pass')
 
-    sys.argv.append('-r')
+    # sys.argv.append('-r')
     sys.argv.append('-d')
     sys.argv.append('/home/hyxf')
     execute()
