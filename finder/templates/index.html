@@ -41,7 +41,8 @@
             <td>{{file.size}}</td>
             <td>
                 {% if file.isfile %}
-                <a style="cursor:pointer;" onclick="del('{{file.path}}')"><span class="glyphicon glyphicon-trash"/></a>
+                <a style="cursor:pointer;" onclick="del('{{file.path}}','{{file.name}}')"><span
+                        class="glyphicon glyphicon-trash"/></a>
                 {% endif %}
             </td>
         </tr>
@@ -56,7 +57,7 @@
 
 
 {% block script %}
-
+<script src="/static/sweetalert2.all.min.js"></script>
 <script>
     (function (document) {
         'use strict';
@@ -100,8 +101,16 @@
     })(document);
 
     //delete file
-    function del(path) {
-        alert(path);
+    function del(path, name) {
+        swal({
+            title: name,
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        });
     }
 </script>
 
