@@ -74,8 +74,8 @@ def mkdir():
     path = request.form['path']
     name = request.form['name']
     path = path[1:] if path.startswith('/') else path
-    file_path = os.path.join(www, path, name)
     try:
+        file_path = os.path.join(www, path, name.strip())
         os.mkdir(file_path)
         return code_success
     except Exception:
