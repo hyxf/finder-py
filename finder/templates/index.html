@@ -112,7 +112,15 @@
             if (result) {
                 $.post("/delete", {path: path},
                     function (data, status) {
-                        alert("Data: " + data + "\nStatus: " + status);
+                        if ("success" == status) {
+                            if ("1" == data) {
+                                document.location.reload()
+                            } else {
+                                BootstrapDialog.alert('Delete Error!');
+                            }
+                        } else {
+                            BootstrapDialog.alert('Server Error!');
+                        }
                     });
             }
         });

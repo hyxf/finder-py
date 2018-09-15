@@ -62,9 +62,18 @@ def delete():
     file delete
     :return:
     """
+    www = app.config.get(key_www)
     path = request.form['path']
-    print(path)
-    return "1"
+    path = path[1:] if path.startswith('/') else path
+    file_path = os.path.join(www, path)
+    if os.path.isfile(file_path):
+        try:
+            os.remove(file_path)
+            return "1"
+        except Exception:
+            return "0"
+    else:
+        return "0"
 
 
 @app.route('/upload', methods=['POST'])
