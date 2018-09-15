@@ -31,8 +31,7 @@
         {% if upload %}
         <div style="float: right;" class="btn-group" role="group" aria-label="Basic example">
             {% block upload %}
-            <button onclick="mkdir('{{path}}')" type="button" class="btn btn-secondary btn-primary">New</button>
-            <button type="button" class="btn btn-secondary btn-primary">Remote</button>
+            <button onclick="mkdir('{{path}}')" type="button" class="btn btn-secondary btn-primary">Mkdir</button>
             <a href="/up88{{path}}" class="btn btn-secondary btn-primary">Upload</a>
             {% endblock %}
         </div>
