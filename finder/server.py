@@ -14,6 +14,7 @@ key_www = 'www'
 key_upload = 'upload'
 key_user = 'user'
 key_pass = 'pass'
+key_mkdir = 'mkdir'
 
 
 def basic_auth_required(f):
@@ -129,7 +130,8 @@ def index_path(path):
                                    files=files,
                                    nav=False if is_root else True,
                                    path=path if path.startswith('/') else '/{0}'.format(path),
-                                   upload=app.config.get(key_upload))
+                                   upload=app.config.get(key_upload),
+                                   makedir=app.config.get(key_mkdir))
 
         else:
             base_name = os.path.basename(file_path)
@@ -157,7 +159,8 @@ def upload_path(path):
                            files=[],
                            nav=True,
                            path=path if path.startswith('/') else '/{0}'.format(path),
-                           upload=app.config.get(key_upload))
+                           upload=app.config.get(key_upload),
+                           makedir=app.config.get(key_mkdir))
 
 
 # --------------------------------------------
@@ -185,6 +188,7 @@ def cmd_http_server(args):
     app.config[key_upload] = args.upload
     app.config[key_user] = args.user
     app.config[key_pass] = args.password
+    app.config[key_mkdir] = args.mkdir
     if args.qr:
         utils.qr_code_show('http://{0}:{1}/'.format(ip, args.port))
     if args.start:
