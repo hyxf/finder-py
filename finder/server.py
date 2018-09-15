@@ -139,7 +139,7 @@ def index_path(path):
                                    title=app_name,
                                    files=files,
                                    nav=False if is_root else True,
-                                   path=path if path.startswith('/') else '/{0}'.format(path),
+                                   path=path if path.startswith('/') else ('/%s' % path),
                                    upload=app.config.get(key_upload),
                                    makedir=app.config.get(key_mkdir),
                                    rm=app.config.get(key_rm))
@@ -173,7 +173,7 @@ def upload_path(path):
                            title=app_name,
                            files=[],
                            nav=True,
-                           path=path if path.startswith('/') else '/{0}'.format(path),
+                           path=path if path.startswith('/') else ('/%s' % path),
                            upload=app.config.get(key_upload),
                            makedir=app.config.get(key_mkdir),
                            rm=app.config.get(key_rm))
