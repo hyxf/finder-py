@@ -30,8 +30,14 @@
         margin-left: auto;
         margin-right: auto;
     }
+
 </style>
 {% endblock %}
+
+
+{% block search %}
+{% endblock %}
+
 
 {% block upload %}
 
@@ -47,7 +53,7 @@
             <DIV class="dz-message needsclick">
                 Drop files here or click to upload.<BR>
             </DIV>
-            <input type="hidden" name="path" value="{{path}}" />
+            <input type="hidden" name="path" value="{{path}}"/>
         </FORM>
     </DIV>
 </div>

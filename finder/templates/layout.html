@@ -22,17 +22,19 @@
 
     <div class="row well" style="padding: 7px;margin-bottom: 5px;">
 
-        <input type="search" style="float: left;width: 250px;" class="form-control light-table-filter"
+        {% block search %}
+        <input type="search" style="float: left;width: 250px" class="form-control light-table-filter finder-search"
                data-table="order-table"
                placeholder="Filter">
+        {% endblock %}
 
         {% if upload %}
         <div style="float: right;" class="btn-group" role="group" aria-label="Basic example">
             {% block upload %}
-            <a href="/up88{{path}}" class="btn btn-secondary btn-primary">Upload</a>
-            {% endblock %}
             <button type="button" class="btn btn-secondary btn-primary">New</button>
             <button type="button" class="btn btn-secondary btn-primary">Remote</button>
+            <a href="/up88{{path}}" class="btn btn-secondary btn-primary">Upload</a>
+            {% endblock %}
         </div>
         {% endif %}
 
