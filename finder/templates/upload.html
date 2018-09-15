@@ -43,10 +43,11 @@
 
 <div class="row row-upload">
     <DIV id="dropzone">
-        <FORM class="dropzone needsclick" id="demo-upload" action="/upload">
+        <FORM class="dropzone needsclick" id="finder-upload" action="/upload">
             <DIV class="dz-message needsclick">
                 Drop files here or click to upload.<BR>
             </DIV>
+            <input type="hidden" name="path" value="{{path}}" />
         </FORM>
     </DIV>
 </div>
@@ -61,7 +62,7 @@
 
 <script>
     $(function () {
-        $("#dropzone").dropzone({
+        $("#finder-upload").dropzone({
             url: "/upload",
             maxFiles: 10,
             addRemoveLinks: true,

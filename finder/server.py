@@ -62,7 +62,7 @@ def upload():
     path = request.form['path']
     ufile = request.files['file']
     """:type :werkzeug.datastructures.FileStorage"""
-    file_path = os.path.join(www, path, ufile.filename)
+    file_path = os.path.join(www, path[1:], ufile.filename)
     ufile.save(dst=file_path)
     return 'success'
 
