@@ -5,6 +5,7 @@ from functools import wraps
 from flask import Flask, abort, send_file, request, Response
 from flask import render_template
 
+import finder
 from finder import daemon
 from finder import utils
 
@@ -146,9 +147,13 @@ def index_path(path):
         else:
             base_name = os.path.basename(file_path)
             # support chinese
-            response = send_file(file_path,
-                                 as_attachment=True,
-                                 attachment_filename=base_name.encode('utf-8'))
+            if finder.is_py2:
+                response = send_file(file_path,
+                                     as_attachment=True,
+                                     attachment_filename=base_name.encode('utf-8'))
+            else:
+                response = send_file(file_path,
+                                     as_attachment=True)
             return response
     else:
         abort(404)
