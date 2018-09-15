@@ -28,14 +28,18 @@
                placeholder="Filter">
         {% endblock %}
 
-        {% if upload %}
+
         <div style="float: right;" class="btn-group" role="group" aria-label="Basic example">
             {% block upload %}
             <button onclick="mkdir('{{path}}')" type="button" class="btn btn-secondary btn-primary">Mkdir</button>
+
+            {% if upload %}
             <a href="/up88{{path}}" class="btn btn-secondary btn-primary">Upload</a>
+            {% endif %}
+
             {% endblock %}
         </div>
-        {% endif %}
+
 
     </div>
 
