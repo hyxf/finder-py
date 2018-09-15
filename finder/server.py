@@ -10,12 +10,17 @@ from finder import utils
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
+app_name = 'Finder'
+
 key_www = 'www'
 key_upload = 'upload'
 key_user = 'user'
 key_pass = 'pass'
 key_mkdir = 'mkdir'
 key_rm = 'rm'
+
+code_success = '1'
+code_error = '0'
 
 
 def basic_auth_required(f):
@@ -71,9 +76,9 @@ def mkdir():
     file_path = os.path.join(www, path, name)
     try:
         os.mkdir(file_path)
-        return "1"
+        return code_success
     except Exception:
-        return "0"
+        return code_error
 
 
 @app.route('/delete', methods=['POST'])
@@ -89,11 +94,11 @@ def delete():
     if os.path.isfile(file_path):
         try:
             os.remove(file_path)
-            return "1"
+            return code_success
         except Exception:
-            return "0"
+            return code_error
     else:
-        return "0"
+        return code_error
 
 
 @app.route('/upload', methods=['POST'])
@@ -107,8 +112,11 @@ def upload():
     ufile = request.files['file']
     """:type :werkzeug.datastructures.FileStorage"""
     file_path = os.path.join(www, path[1:], ufile.filename)
-    ufile.save(dst=file_path)
-    return '1'
+    try:
+        ufile.save(dst=file_path)
+        return code_success
+    except Exception:
+        return code_error
 
 
 @app.route('/', defaults={'path': '/'}, methods=['GET'])
@@ -127,7 +135,7 @@ def index_path(path):
         if os.path.isdir(file_path):
             files = _ls(file_path, show_hidden=False)
             return render_template('index.html',
-                                   title='Finder',
+                                   title=app_name,
                                    files=files,
                                    nav=False if is_root else True,
                                    path=path if path.startswith('/') else '/{0}'.format(path),
@@ -157,7 +165,7 @@ def upload_path(path):
     """
     # www = app.config.get(key_www)
     return render_template('upload.html',
-                           title='Finder',
+                           title=app_name,
                            files=[],
                            nav=True,
                            path=path if path.startswith('/') else '/{0}'.format(path),
