@@ -15,6 +15,7 @@ key_upload = 'upload'
 key_user = 'user'
 key_pass = 'pass'
 key_mkdir = 'mkdir'
+key_rm = 'rm'
 
 
 def basic_auth_required(f):
@@ -131,7 +132,8 @@ def index_path(path):
                                    nav=False if is_root else True,
                                    path=path if path.startswith('/') else '/{0}'.format(path),
                                    upload=app.config.get(key_upload),
-                                   makedir=app.config.get(key_mkdir))
+                                   makedir=app.config.get(key_mkdir),
+                                   rm=app.config.get(key_rm))
 
         else:
             base_name = os.path.basename(file_path)
@@ -153,14 +155,15 @@ def upload_path(path):
     :param path:
     :return:
     """
-    www = app.config.get(key_www)
+    # www = app.config.get(key_www)
     return render_template('upload.html',
                            title='Finder',
                            files=[],
                            nav=True,
                            path=path if path.startswith('/') else '/{0}'.format(path),
                            upload=app.config.get(key_upload),
-                           makedir=app.config.get(key_mkdir))
+                           makedir=app.config.get(key_mkdir),
+                           rm=app.config.get(key_rm))
 
 
 # --------------------------------------------
@@ -189,6 +192,7 @@ def cmd_http_server(args):
     app.config[key_user] = args.user
     app.config[key_pass] = args.password
     app.config[key_mkdir] = args.mkdir
+    app.config[key_rm] = args.rm
     if args.qr:
         utils.qr_code_show('http://{0}:{1}/'.format(ip, args.port))
     if args.start:

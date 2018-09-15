@@ -45,8 +45,12 @@
             <td>{{file.size}}</td>
             <td>
                 {% if file.isfile %}
+
+                {% if rm %}
                 <a style="cursor:pointer;" onclick="del('{{file.path}}','{{file.name}}')"><span
                         class="glyphicon glyphicon-trash"/></a>
+                {% endif %}
+
                 {% endif %}
             </td>
         </tr>
