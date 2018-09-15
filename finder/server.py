@@ -64,6 +64,7 @@ def delete():
     """
     path = request.form['path']
     print(path)
+    return "1"
 
 
 @app.route('/upload', methods=['POST'])
