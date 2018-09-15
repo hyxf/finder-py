@@ -41,9 +41,7 @@
             <td>{{file.size}}</td>
             <td>
                 {% if file.isfile %}
-                <a href="#"><span class="glyphicon glyphicon-trash"/></a>
-                <a href="{{file.path}}"><span style="margin-left: 3px"
-                                              class="glyphicon glyphicon-download-alt"/></a>
+                <a style="cursor:pointer;" onclick="del('{{file.path}}')"><span class="glyphicon glyphicon-trash"/></a>
                 {% endif %}
             </td>
         </tr>
@@ -101,6 +99,9 @@
 
     })(document);
 
+    function del(path) {
+        alert(path);
+    }
 </script>
 
 {% endblock %}

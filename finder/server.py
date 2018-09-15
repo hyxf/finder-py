@@ -56,6 +56,16 @@ def _ls(path, show_hidden=True):
     return files
 
 
+@app.route('/delete', methods=['POST'])
+def delete():
+    """
+    file delete
+    :return:
+    """
+    path = request.form['path']
+    print(path)
+
+
 @app.route('/upload', methods=['POST'])
 def upload():
     """
