@@ -125,6 +125,40 @@
             }
         });
     }
+
+    //makedir
+    function mkdir(path) {
+        BootstrapDialog.show({
+            message: 'New dir: <input type="text" class="form-control">',
+            buttons: [{
+                label: 'mkdir',
+                action: function (dialogRef) {
+                    var name = dialogRef.getModalBody().find('input').val();
+                    if ("" != name) {
+                        dialogRef.close();
+                        $.post("/mkdir", {path: path, name: name},
+                            function (data, status) {
+                                if ("success" == status) {
+                                    if ("1" == data) {
+                                        document.location.reload()
+                                    } else {
+                                        BootstrapDialog.alert('Mkdir Error!');
+                                    }
+                                } else {
+                                    BootstrapDialog.alert('Server Error!');
+                                }
+                            });
+                    }
+                }
+            }, {
+                label: 'close',
+                action: function (dialogRef) {
+                    dialogRef.close();
+                }
+            }]
+        });
+    }
+
 </script>
 
 {% endblock %}

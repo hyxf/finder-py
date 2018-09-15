@@ -56,6 +56,24 @@ def _ls(path, show_hidden=True):
     return files
 
 
+@app.route('/mkdir', methods=['POST'])
+def mkdir():
+    """
+    file delete
+    :return:
+    """
+    www = app.config.get(key_www)
+    path = request.form['path']
+    name = request.form['name']
+    path = path[1:] if path.startswith('/') else path
+    file_path = os.path.join(www, path, name)
+    try:
+        os.mkdir(file_path)
+        return "1"
+    except Exception:
+        return "0"
+
+
 @app.route('/delete', methods=['POST'])
 def delete():
     """
