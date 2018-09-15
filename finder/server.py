@@ -58,6 +58,10 @@ def _ls(path, show_hidden=True):
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    """
+    file upload
+    :return:
+    """
     www = app.config.get(key_www)
     path = request.form['path']
     ufile = request.files['file']
