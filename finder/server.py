@@ -39,7 +39,8 @@ def basic_auth_required(f):
 
 
 def _not_authenticated():
-    """Sends a 401 response that enables basic auth
+    """
+    Sends a 401 response that enables basic auth
     """
     return Response(
         'Could not verify your access level for that URL.\n'
@@ -48,6 +49,12 @@ def _not_authenticated():
 
 
 def _ls(path, show_hidden=True):
+    """
+    list file
+    :param path:
+    :param show_hidden:
+    :return:
+    """
     www = app.config.get(key_www)
     lists = os.listdir(path)
     if not show_hidden:
@@ -67,7 +74,7 @@ def _ls(path, show_hidden=True):
 @app.route('/mkdir', methods=['POST'])
 def mkdir():
     """
-    file delete
+    file mkdir
     :return:
     """
     www = app.config.get(key_www)
