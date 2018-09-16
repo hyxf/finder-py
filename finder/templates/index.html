@@ -1,172 +1,192 @@
 {% extends 'layout.html' %}
 
 {% block style %}
-<link rel="stylesheet" href="/static/dialog/css/bootstrap-dialog.min.css">
+    <link rel="stylesheet" href="/static/dialog/css/bootstrap-dialog.min.css">
 {% endblock %}
 
 {% block body %}
 
-<div class="row table-responsive">
+    <div class="row table-responsive">
 
-    <table class="table order-table">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Time</th>
-            <th>Size</th>
-            <th>Tools</th>
+        <table class="table order-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Time</th>
+                <th>Size</th>
+                <th>Tools</th>
 
-        </tr>
-        </thead>
-        <tbody>
+            </tr>
+            </thead>
+            <tbody>
 
-        {% if nav %}
-        <tr>
-            <td><a href="../" title="back"><span class="glyphicon glyphicon-chevron-left"/>Back</a></td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-        </tr>
-        {% endif %}
+            {% if nav %}
+                <tr>
+                    <td><a href="../" title="back"><span class="glyphicon glyphicon-chevron-left"/>Back</a></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            {% endif %}
 
-        {% for file in files %}
-        <tr>
-            <td>
-                <a href="{{file.path}}" title="{{file.name}}">
-                    {% if file.isfile %}
-                    <span class="glyphicon glyphicon-file"/>
-                    {% else %}
-                    <span class="glyphicon glyphicon-folder-open"/>
-                    {% endif %}
-                    {{file.name}}
-                </a>
-            </td>
-            <td>{{file.time}}</td>
-            <td>{{file.size}}</td>
-            <td>
-                {% if file.isfile %}
+            {% for file in files %}
+                <tr>
+                    <td>
+                        <a href="{{ file.path }}" title="{{ file.name }}">
+                            {% if file.isfile %}
+                                <span class="glyphicon glyphicon-file"/>
+                            {% else %}
+                                <span class="glyphicon glyphicon-folder-open"/>
+                            {% endif %}
+                            {{ file.name }}
+                        </a>
+                    </td>
+                    <td>{{ file.time }}</td>
+                    <td>{{ file.size }}</td>
+                    <td>
+                        {% if file.isfile %}
 
-                {% if rm %}
-                <a style="cursor:pointer;" onclick="del('{{file.path}}','{{file.name}}')"><span
-                        class="glyphicon glyphicon-trash"/></a>
-                {% endif %}
+                            {% if rm %}
+                                <a style="cursor:pointer;" onclick="del('{{ file.path }}','{{ file.name }}')"><span
+                                        class="glyphicon glyphicon-trash"/></a>
+                            {% endif %}
 
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-</div>
+    </div>
 
 {% endblock %}
 
 
 {% block script %}
-<script src="/static/jquery-1.12.1.min.js"></script>
-<script src="/static/bootstrap/js/bootstrap.min.js"></script>
-<script src="/static/dialog/js/bootstrap-dialog.min.js"></script>
-<script>
-    (function (document) {
-        'use strict';
+    <script src="/static/jquery-1.12.1.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/dialog/js/bootstrap-dialog.min.js"></script>
+    <script src="/static/jquery.qrcode.min.js"></script>
+    <script>
+        (function (document) {
+            'use strict';
 
-        var LightTableFilter = (function (Arr) {
+            var LightTableFilter = (function (Arr) {
 
-            var _input;
+                var _input;
 
-            function _onInputEvent(e) {
-                _input = e.target;
-                var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-                Arr.forEach.call(tables, function (table) {
-                    Arr.forEach.call(table.tBodies, function (tbody) {
-                        Arr.forEach.call(tbody.rows, _filter);
-                    });
-                });
-            }
-
-            function _filter(row) {
-                var text = row.textContent.toLowerCase(),
-                    val = _input.value.toLowerCase();
-                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-            }
-
-            return {
-                init: function () {
-                    var inputs = document.getElementsByClassName('light-table-filter');
-                    Arr.forEach.call(inputs, function (input) {
-                        input.oninput = _onInputEvent;
+                function _onInputEvent(e) {
+                    _input = e.target;
+                    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+                    Arr.forEach.call(tables, function (table) {
+                        Arr.forEach.call(table.tBodies, function (tbody) {
+                            Arr.forEach.call(tbody.rows, _filter);
+                        });
                     });
                 }
-            };
-        })(Array.prototype);
 
-        document.addEventListener('readystatechange', function () {
-            if (document.readyState === 'complete') {
-                LightTableFilter.init();
-            }
-        });
+                function _filter(row) {
+                    var text = row.textContent.toLowerCase(),
+                        val = _input.value.toLowerCase();
+                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+                }
 
-    })(document);
-
-    //delete file
-    function del(path, name) {
-        BootstrapDialog.confirm('Delete ' + name + ' ?', function (result) {
-            if (result) {
-                $.post("/delete", {path: path},
-                    function (data, status) {
-                        if ("success" == status) {
-                            if ("1" == data) {
-                                document.location.reload()
-                            } else {
-                                BootstrapDialog.alert('Delete Error!');
-                            }
-                        } else {
-                            BootstrapDialog.alert('Server Error!');
-                        }
-                    });
-            }
-        });
-    }
-
-    //makedir
-    function mkdir(path) {
-        BootstrapDialog.show({
-            message: 'New dir: <input type="text" class="form-control">',
-            buttons: [{
-                label: 'mkdir',
-                action: function (dialogRef) {
-                    var name = dialogRef.getModalBody().find('input').val();
-                    if ("" != name) {
-                        dialogRef.close();
-                        $.post("/mkdir", {path: path, name: name},
-                            function (data, status) {
-                                if ("success" == status) {
-                                    if ("1" == data) {
-                                        document.location.reload()
-                                    } else {
-                                        BootstrapDialog.alert('Mkdir Error!');
-                                    }
-                                } else {
-                                    BootstrapDialog.alert('Server Error!');
-                                }
-                            });
+                return {
+                    init: function () {
+                        var inputs = document.getElementsByClassName('light-table-filter');
+                        Arr.forEach.call(inputs, function (input) {
+                            input.oninput = _onInputEvent;
+                        });
                     }
-                }
-            }, {
-                label: 'close',
-                action: function (dialogRef) {
-                    dialogRef.close();
-                }
-            }]
-        });
-    }
+                };
+            })(Array.prototype);
 
-    function qrcode() {
-        alert(window.location.href);
-    }
+            document.addEventListener('readystatechange', function () {
+                if (document.readyState === 'complete') {
+                    LightTableFilter.init();
+                }
+            });
 
-</script>
+        })(document);
+
+        //delete file
+        function del(path, name) {
+            BootstrapDialog.confirm('Delete ' + name + ' ?', function (result) {
+                if (result) {
+                    $.post("/delete", {path: path},
+                        function (data, status) {
+                            if ("success" == status) {
+                                if ("1" == data) {
+                                    document.location.reload()
+                                } else {
+                                    BootstrapDialog.alert('Delete Error!');
+                                }
+                            } else {
+                                BootstrapDialog.alert('Server Error!');
+                            }
+                        });
+                }
+            });
+        }
+
+        //makedir
+        function mkdir(path) {
+            BootstrapDialog.show({
+                message: 'New dir: <input type="text" class="form-control">',
+                buttons: [{
+                    label: 'mkdir',
+                    action: function (dialogRef) {
+                        var name = dialogRef.getModalBody().find('input').val();
+                        if ("" != name) {
+                            dialogRef.close();
+                            $.post("/mkdir", {path: path, name: name},
+                                function (data, status) {
+                                    if ("success" == status) {
+                                        if ("1" == data) {
+                                            document.location.reload()
+                                        } else {
+                                            BootstrapDialog.alert('Mkdir Error!');
+                                        }
+                                    } else {
+                                        BootstrapDialog.alert('Server Error!');
+                                    }
+                                });
+                        }
+                    }
+                }, {
+                    label: 'close',
+                    action: function (dialogRef) {
+                        dialogRef.close();
+                    }
+                }]
+            });
+        }
+
+        function qrcode() {
+            const $textAndPic = $('<div style="text-align: center" id="qrcode"></div>');
+            BootstrapDialog.show({
+                size: BootstrapDialog.SIZE_SMALL,
+                title: 'QR Code',
+                message: $textAndPic,
+                buttons: [{
+                    label: 'Close',
+                    action: function (dialogRef) {
+                        dialogRef.close();
+                    }
+                }],
+                onshown: function (dialogRef) {
+                    dialogRef.getModalContent().find("div[id='qrcode']").qrcode({
+                        width: 200,
+                        height: 200,
+                        text: window.location.href
+                    });
+                }
+            });
+
+        }
+
+    </script>
 
 {% endblock %}
