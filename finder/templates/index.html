@@ -4,6 +4,21 @@
     <link rel="stylesheet" href="/static/dialog/css/bootstrap-dialog.min.css">
 {% endblock %}
 
+
+{% block upload %}
+    {{  super()  }}
+    {% if makedir %}
+        <button onclick="mkdir('{{ path }}')" type="button" class="btn btn-secondary btn-primary">Mkdir
+        </button>
+    {% endif %}
+
+    {% if upload %}
+        <a href="/up88{{ path }}" class="btn btn-secondary btn-primary">Upload</a>
+    {% endif %}
+
+{% endblock %}
+
+
 {% block body %}
 
     <div class="row table-responsive">
