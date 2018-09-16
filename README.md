@@ -6,11 +6,12 @@ It is a tool for 'LAN file Share', support [win, mac, linux]
 ### Use help
 
 ~~~bash
-~ finder
-usage: finder [-h] [-i IP] [-p PORT] [-d DIR] [-q] [-u] [--start]
-              [--pid_file PID_FILE] [--log_file LOG_FILE] [--stop]
+~ finder-py git:(dev) ✗ finder -h
+usage: finder [-h] [-i IP] [-p PORT] [-d DIR] [-q] [-u] [-m] [-r]
+              [--user USER] [--password PASSWORD] [--start] [--stop]
+              [--pid_file PID_FILE] [--log_file LOG_FILE]
 
-LAN file sharing 1.2.1
+LAN file sharing 1.3.0
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -19,10 +20,14 @@ optional arguments:
   -d DIR, --dir DIR     Shared directory path
   -q, --qr              Show QRCode
   -u, --upload          Support upload
+  -m, --mkdir           Support mkdir
+  -r, --rm              Support mkdir
+  --user USER           Basic Auth User
+  --password PASSWORD   Basic Auth Password
   --start               daemon start
+  --stop                daemon stop
   --pid_file PID_FILE   pid_file
   --log_file LOG_FILE   log_file
-  --stop                daemon stop
 
 make it easy
 ~~~
