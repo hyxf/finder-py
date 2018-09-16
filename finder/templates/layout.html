@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" type="image/x-icon" href="/static/favicon.png"/>
-    <title>{{title}} - {{path}}</title>
+    <title>{{ title }} - {{ path }}</title>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
     {% block style %}
     {% endblock %}
@@ -17,28 +17,39 @@
 <div class="container">
 
     <div class="row">
-        <h2 style="margin-left: 5px"><a href="/">{{title}}</a> - {{path}}</h2>
+        <h2 style="margin-left: 5px"><a href="/">{{ title }}</a> - {{ path }}</h2>
     </div>
 
     <div class="row well" style="padding: 7px;margin-bottom: 5px;">
 
         {% block search %}
-        <input type="search" style="float: left;width: 250px" class="form-control light-table-filter finder-search"
-               data-table="order-table"
-               placeholder="Filter">
+            <form class="form-inline" style="float: left;">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="search"
+                               class="form-control light-table-filter finder-search"
+                               data-table="order-table"
+                               placeholder="file name">
+                        <div class="input-group-addon">Filter</div>
+                    </div>
+                </div>
+            </form>
         {% endblock %}
 
 
         <div style="float: right;" class="btn-group" role="group" aria-label="Basic example">
             {% block upload %}
+                <button onclick="qrcode()" type="button" class="btn btn-secondary btn-primary">
+                    <span style="font-size: small;" class="glyphicon glyphicon-qrcode"></span>
+                </button>
+                {% if makedir %}
+                    <button onclick="mkdir('{{ path }}')" type="button" class="btn btn-secondary btn-primary">Mkdir
+                    </button>
+                {% endif %}
 
-            {% if makedir %}
-            <button onclick="mkdir('{{path}}')" type="button" class="btn btn-secondary btn-primary">Mkdir</button>
-            {% endif %}
-
-            {% if upload %}
-            <a href="/up88{{path}}" class="btn btn-secondary btn-primary">Upload</a>
-            {% endif %}
+                {% if upload %}
+                    <a href="/up88{{ path }}" class="btn btn-secondary btn-primary">Upload</a>
+                {% endif %}
 
             {% endblock %}
         </div>
