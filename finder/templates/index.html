@@ -1,9 +1,5 @@
 {% extends 'layout.html' %}
 
-{% block style %}
-    <link rel="stylesheet" href="/static/dialog/css/bootstrap-dialog.min.css">
-{% endblock %}
-
 
 {% block upload %}
     {{  super()  }}
@@ -80,10 +76,6 @@
 
 
 {% block script %}
-    <script src="/static/jquery-1.12.1.min.js"></script>
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/static/dialog/js/bootstrap-dialog.min.js"></script>
-    <script src="/static/jquery.qrcode.min.js"></script>
     <script>
         (function (document) {
             'use strict';
@@ -177,29 +169,6 @@
                     }
                 }]
             });
-        }
-
-        function qrcode() {
-            const $textAndPic = $('<div style="text-align: center" id="qrcode"></div>');
-            BootstrapDialog.show({
-                size: BootstrapDialog.SIZE_SMALL,
-                title: 'QR Code',
-                message: $textAndPic,
-                buttons: [{
-                    label: 'Close',
-                    action: function (dialogRef) {
-                        dialogRef.close();
-                    }
-                }],
-                onshown: function (dialogRef) {
-                    dialogRef.getModalContent().find("div[id='qrcode']").qrcode({
-                        width: 200,
-                        height: 200,
-                        text: window.location.href
-                    });
-                }
-            });
-
         }
 
     </script>
