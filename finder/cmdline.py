@@ -7,6 +7,7 @@ import argparse
 import sys
 
 import finder
+from finder import utils
 from finder.server import cmd_http_server
 
 __author__ = "hyxf"
@@ -37,8 +38,8 @@ def execute():
 
     parser.add_argument('--start', action='store_true', default=False, help='daemon start')
     parser.add_argument('--stop', action='store_true', default=False, help='daemon stop')
-    parser.add_argument('--pid_file', type=str, default='/var/run/finder.pid', help='pid_file')
-    parser.add_argument('--log_file', type=str, default='/var/log/finder.log', help='log_file')
+    parser.add_argument('--pid_file', type=str, default=utils.get_pid(), help='pid_file')
+    parser.add_argument('--log_file', type=str, default=utils.get_log(), help='log_file')
 
     args = parser.parse_args()
     args.func(args)
@@ -58,5 +59,5 @@ if __name__ == '__main__':
     sys.argv.append('-m')
 
     sys.argv.append('-d')
-    sys.argv.append('/home/hyxf')
+    sys.argv.append(utils.get_home())
     execute()

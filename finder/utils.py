@@ -66,3 +66,51 @@ def get_ip():
         return addr
     except socket.error:
         return '127.0.0.1'
+
+
+def get_home():
+    """
+    get user home
+    :return:
+    """
+    home = os.path.expanduser('~')
+    if home:
+        return home
+    home = os.path.expandvars('$HOME')
+    if home:
+        return home
+    home = os.environ['HOME']
+    if home:
+        return home
+    else:
+        return None
+
+
+def get_log():
+    """
+    get log file
+    :return:
+    """
+    home = get_home()
+    if home:
+        finder_home = os.path.join(home, '.finder-py')
+        if not os.path.exists(finder_home):
+            os.mkdir(finder_home)
+        return os.path.join(finder_home, 'finder.log')
+    else:
+        return '/var/log/finder.log'
+
+
+def get_pid():
+    """
+    get pid file
+    :return:
+    """
+    home = get_home()
+    if home:
+        finder_home = os.path.join(home, '.finder-py')
+        if not os.path.exists(finder_home):
+            os.mkdir(finder_home)
+        return os.path.join(finder_home, 'finder.pid')
+    else:
+        return '/var/run/finder.pid'
