@@ -3,7 +3,7 @@ finder-py
 
 It is only a tool for 'LAN file Share', support [win, mac, linux]
 
-![alt tag](https://github.com/hyxf/finder-java/blob/master/screenshots/running.png)
+![alt tag](https://github.com/hyxf/finder-py/blob/master/screenshots/screen.jpg)
 
 ### Use help
 
