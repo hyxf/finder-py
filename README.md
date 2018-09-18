@@ -6,7 +6,7 @@ It is a tool for 'LAN file Share', support [win, mac, linux]
 ### Use help
 
 ~~~bash
-~ finder-py git:(dev) ✗ finder -h
+~ finder -h
 usage: finder [-h] [-i IP] [-p PORT] [-d DIR] [-q] [-u] [-m] [-r]
               [--user USER] [--password PASSWORD] [--start] [--stop]
               [--pid_file PID_FILE] [--log_file LOG_FILE]
