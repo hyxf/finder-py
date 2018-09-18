@@ -11,7 +11,7 @@ usage: finder [-h] [-i IP] [-p PORT] [-d DIR] [-q] [-u] [-m] [-r]
               [--user USER] [--password PASSWORD] [--start] [--stop]
               [--pid_file PID_FILE] [--log_file LOG_FILE]
 
-LAN file sharing 1.3.0
+LAN file sharing 1.3.2
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -21,7 +21,7 @@ optional arguments:
   -q, --qr              Show QRCode
   -u, --upload          Support upload
   -m, --mkdir           Support mkdir
-  -r, --rm              Support mkdir
+  -r, --rm              Support rm
   --user USER           Basic Auth User
   --password PASSWORD   Basic Auth Password
   --start               daemon start
