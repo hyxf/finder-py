@@ -1,7 +1,7 @@
 finder-py
 =======
 
-It is a tool for 'LAN file Share', support [win, mac, linux]
+It is only a tool for 'LAN file Share', support [win, mac, linux]
 
 ![alt tag](https://github.com/hyxf/finder-java/blob/master/screenshots/running.png)
 
