@@ -2,8 +2,13 @@
 import os
 from functools import wraps
 
+try:
+    from urllib import quote
+except ImportError:
+    from urllib.parse import quote
+
 from flask import Flask, abort, send_file, request, Response
-from flask import render_template
+from flask import render_template, make_response
 
 import finder
 from finder import daemon
@@ -155,9 +160,13 @@ def index_path(path):
             base_name = os.path.basename(file_path)
             # support chinese
             if finder.is_py2:
-                response = send_file(file_path,
-                                     as_attachment=True,
-                                     attachment_filename=base_name.encode('utf-8'))
+                response = make_response(send_file(file_path, as_attachment=True))
+                response.headers["Content-Disposition"] = \
+                    "attachment;" \
+                    "filename*=UTF-8''{utf_filename}".format(
+                        utf_filename=quote(base_name.encode('utf-8'))
+                    )
+                return response
             else:
                 response = send_file(file_path,
                                      as_attachment=True)
