@@ -24,6 +24,7 @@ key_user = 'user'
 key_pass = 'pass'
 key_mkdir = 'mkdir'
 key_rm = 'rm'
+key_hidden = 'hidden'
 
 code_success = '1'
 code_error = '0'
@@ -142,11 +143,12 @@ def index_path(path):
     :return:
     """
     www = app.config.get(key_www)
+    hidden = app.config.get(key_hidden)
     is_root = path == '/'
     file_path = www if is_root else os.path.join(www, path)
     if os.path.exists(file_path):
         if os.path.isdir(file_path):
-            files = _ls(file_path, show_hidden=False)
+            files = _ls(file_path, show_hidden=hidden)
             return render_template('index.html',
                                    title=app_name,
                                    files=files,
@@ -222,6 +224,7 @@ def cmd_http_server(args):
     app.config[key_pass] = args.password
     app.config[key_mkdir] = args.mkdir
     app.config[key_rm] = args.rm
+    app.config[key_hidden] = args.hidden
     if args.qr:
         utils.qr_code_show('http://{0}:{1}/'.format(ip, args.port))
     if args.start:
