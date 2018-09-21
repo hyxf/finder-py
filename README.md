@@ -8,12 +8,12 @@ It is only a tool for 'LAN file Share', support [win, mac, linux]
 ### Use help
 
 ~~~bash
-~ finder -h
-usage: finder [-h] [-i IP] [-p PORT] [-d DIR] [-q] [-u] [-m] [-r]
-              [--user USER] [--password PASSWORD] [--start] [--stop]
-              [--pid_file PID_FILE] [--log_file LOG_FILE]
+~  finder -h
+usage: finder [-h] [-i IP] [-p PORT] [-d DIR] [-q] [-u] [-m] [-z] [-r]
+              [--hidden] [--user USER] [--password PASSWORD] [--start]
+              [--stop] [--pid_file PID_FILE] [--log_file LOG_FILE]
 
-LAN file sharing 1.3.2
+LAN file sharing 1.3.3
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -23,7 +23,9 @@ optional arguments:
   -q, --qr              Show QRCode
   -u, --upload          Support upload
   -m, --mkdir           Support mkdir
+  -z, --zip             Support zip
   -r, --rm              Support rm
+  --hidden              Show hidden
   --user USER           Basic Auth User
   --password PASSWORD   Basic Auth Password
   --start               daemon start
