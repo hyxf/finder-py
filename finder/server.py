@@ -87,13 +87,17 @@ def zipball(path):
     dir_path = os.path.join(www, path)
     base_name = os.path.basename(dir_path)
 
-    z = zipstream.ZipFile(mode='w', compression=ZIP_DEFLATED)
-    for root, directories, files in os.walk(dir_path):
-        for filename in files:
-            t_file = os.path.join(root, filename)
-            z.write(t_file, t_file.replace(dir_path, ''))
+    def generator():
+        z = zipstream.ZipFile(mode='w', compression=ZIP_DEFLATED)
+        for root, directories, files in os.walk(dir_path):
+            for filename in files:
+                t_file = os.path.join(root, filename)
+                z.write(t_file, t_file.replace(dir_path, ''))
 
-    response = Response(z, mimetype='application/zip')
+        for chunk in z:
+            yield chunk
+
+    response = Response(generator(), mimetype='application/zip')
     response.headers["Content-Disposition"] = \
         "attachment;" \
         "filename*=UTF-8''{utf_filename}.zip".format(
