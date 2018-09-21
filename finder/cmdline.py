@@ -30,6 +30,7 @@ def execute():
     parser.add_argument('-q', '--qr', action='store_true', default=False, help='Show QRCode')
     parser.add_argument('-u', '--upload', action='store_true', default=False, help='Support upload')
     parser.add_argument('-m', '--mkdir', action='store_true', default=False, help='Support mkdir')
+    parser.add_argument('-z', '--zip', action='store_true', default=False, help='Support zip')
 
     parser.add_argument('-r', '--rm', action='store_true', default=False, help='Support rm')
 
@@ -57,9 +58,10 @@ if __name__ == '__main__':
     # sys.argv.append('pass')
 
     # sys.argv.append('--hidden')
-    sys.argv.append('-r')
+    # sys.argv.append('-r')
     sys.argv.append('-u')
     sys.argv.append('-m')
+    sys.argv.append('--zip')
 
     sys.argv.append('-d')
     sys.argv.append(utils.get_home())

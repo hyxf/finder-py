@@ -2,6 +2,7 @@
 import os
 import shutil
 from functools import wraps
+from zipfile import ZIP_DEFLATED
 
 try:
     from urllib import quote
@@ -12,7 +13,7 @@ from flask import Flask, abort, send_file, request, Response
 from flask import render_template, make_response
 
 import finder
-from finder import daemon
+from finder import daemon, zipstream
 from finder import utils
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
@@ -26,6 +27,7 @@ key_pass = 'pass'
 key_mkdir = 'mkdir'
 key_rm = 'rm'
 key_hidden = 'hidden'
+key_zip = 'zip'
 
 code_success = '1'
 code_error = '0'
@@ -76,6 +78,28 @@ def _ls(path, show_hidden=True):
                     'size': utils.get_file_size(file_path) if os.path.isfile(file_path) else '-'}
         files.append(file_map)
     return files
+
+
+@app.route('/zip88/<path:path>', methods=['GET'], endpoint='zipball')
+def zipball(path):
+    www = app.config.get(key_www)
+    path = path[1:] if path.startswith('/') else path
+    dir_path = os.path.join(www, path)
+    base_name = os.path.basename(dir_path)
+
+    z = zipstream.ZipFile(mode='w', compression=ZIP_DEFLATED)
+    for root, directories, files in os.walk(dir_path):
+        for filename in files:
+            t_file = os.path.join(root, filename)
+            z.write(t_file, t_file.replace(dir_path, ''))
+
+    response = Response(z, mimetype='application/zip')
+    response.headers["Content-Disposition"] = \
+        "attachment;" \
+        "filename*=UTF-8''{utf_filename}.zip".format(
+            utf_filename=quote(base_name.encode('utf-8'))
+        )
+    return response
 
 
 @app.route('/mkdir', methods=['POST'])
@@ -157,7 +181,8 @@ def index_path(path):
                                    path=path if path.startswith('/') else ('/%s' % path),
                                    upload=app.config.get(key_upload),
                                    makedir=app.config.get(key_mkdir),
-                                   rm=app.config.get(key_rm))
+                                   rm=app.config.get(key_rm),
+                                   zip=app.config.get(key_zip))
 
         else:
             base_name = os.path.basename(file_path)
@@ -195,7 +220,8 @@ def upload_path(path):
                            path=path if path.startswith('/') else ('/%s' % path),
                            upload=app.config.get(key_upload),
                            makedir=app.config.get(key_mkdir),
-                           rm=app.config.get(key_rm))
+                           rm=app.config.get(key_rm),
+                           zip=app.config.get(key_zip))
 
 
 # --------------------------------------------
@@ -226,6 +252,7 @@ def cmd_http_server(args):
     app.config[key_mkdir] = args.mkdir
     app.config[key_rm] = args.rm
     app.config[key_hidden] = args.hidden
+    app.config[key_zip] = args.zip
     if args.qr:
         utils.qr_code_show('http://{0}:{1}/'.format(ip, args.port))
     if args.start:

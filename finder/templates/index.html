@@ -60,6 +60,12 @@
                             <a style="cursor:pointer;" onclick="del('{{ file.path }}','{{ file.name }}')"><span
                                     class="glyphicon glyphicon-trash"/></a>
                         {% endif %}
+
+                        {% if zip and not file.isfile %}
+                            <a style="margin-left: 10px" href="/zip88{{ file.path }}">
+                                <span class="glyphicon glyphicon-download-alt"/>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
