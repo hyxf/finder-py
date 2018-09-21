@@ -16,7 +16,7 @@ from finder import utils
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-app_name = 'Finder'
+app_name = 'Finder %s' % finder.__version__
 
 key_www = 'www'
 key_upload = 'upload'
