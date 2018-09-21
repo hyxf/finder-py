@@ -228,4 +228,6 @@ def cmd_http_server(args):
         daemon.daemon_exec(command='start',
                            pid_file=args.pid_file,
                            log_file=args.log_file)
-    app.run(host=ip, port=args.port)
+    app.run(host=ip,
+            port=args.port,
+            debug=False)
