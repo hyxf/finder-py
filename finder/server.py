@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import shutil
 from functools import wraps
 
 try:
@@ -105,13 +106,13 @@ def delete():
     path = request.form['path']
     path = path[1:] if path.startswith('/') else path
     file_path = os.path.join(www, path)
-    if os.path.isfile(file_path):
-        try:
+    try:
+        if os.path.isfile(file_path):
             os.remove(file_path)
-            return code_success
-        except Exception:
-            return code_error
-    else:
+        else:
+            shutil.rmtree(file_path)
+        return code_success
+    except Exception:
         return code_error
 
 
